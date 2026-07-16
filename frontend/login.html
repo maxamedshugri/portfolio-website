@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Maxamed Portfolio</title>
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+ 
+<div class="login-wrapper">
+  <div class="login-card">
+    <a href="index.html" class="back-home">← Back to Home</a>
+    <h1>Welcome <span>Back</span></h1>
+    <p class="subtitle">Sign in to access the admin dashboard</p>
+ 
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter your username" required>
+ 
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+ 
+      <button type="submit">Login</button>
+      <p class="form-status" id="loginStatus"></p>
+    </form>
+ 
+    <p class="hint">Default admin account is created by the backend seed data.</p>
+  </div>
+</div>
+ 
+<script>
+const API_BASE_URL = "https://localhost:5001/api";
+const loginForm = document.getElementById("loginForm");
+const loginStatus = document.getElementById("loginStatus");
+ 
+loginForm.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+ 
+  loginStatus.textContent = "Signing in...";
+  loginStatus.style.color = "#d86cff";
+ 
+  try{
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({username, password})
+    });
+ 
+    if(res.ok){
+      const data = await res.json();
+      localStorage.setItem("token", data.token);
+      loginStatus.textContent = "Login successful! Redirecting...";
+      loginStatus.style.color = "#4caf50";
+      setTimeout(()=>{ window.location.href = "admin.html"; }, 800);
+    } else {
+      loginStatus.textContent = "Invalid username or password.";
+      loginStatus.style.color = "#ff6b6b";
+    }
+  } catch(err){
+    loginStatus.textContent = "Could not reach the server. Is the backend running?";
+    loginStatus.style.color = "#ff6b6b";
+  }
+});
+</script>
+ 
+</body>
+</html>

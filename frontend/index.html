@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maxamed | Portfolio</title>
+ 
+<style>
+:root{
+  --bg-grad-1:#3a0b5e;
+  --bg-grad-2:#0b0014;
+  --text:#fff;
+  --accent:#d86cff;
+  --card-bg:rgba(255,255,255,.05);
+  --nav-bg:linear-gradient(to right,rgba(120,0,200,.25),rgba(0,0,0,.1));
+  --input-bg:#111;
+  --input-border:#333;
+}
+[data-theme="light"]{
+  --bg-grad-1:#f3e6ff;
+  --bg-grad-2:#ffffff;
+  --text:#180027;
+  --accent:#9a1fd6;
+  --card-bg:rgba(0,0,0,.04);
+  --nav-bg:linear-gradient(to right,rgba(200,150,255,.35),rgba(255,255,255,.4));
+  --input-bg:#fff;
+  --input-border:#ccc;
+}
+ 
+*{margin:0;padding:0;box-sizing:border-box}
+ 
+html{scroll-behavior:smooth}
+ 
+body{
+  font-family:"Segoe UI",sans-serif;
+  background:radial-gradient(circle at top,var(--bg-grad-1),var(--bg-grad-2));
+  color:var(--text);
+  line-height:1.6;
+  transition:background .4s,color .4s;
+}
+ 
+/* NAVBAR */
+nav{
+  position:fixed;
+  top:0;width:100%;
+  backdrop-filter:blur(12px);
+  background:var(--nav-bg);
+  z-index:100;
+  transition:background .4s;
+}
+.nav{
+  max-width:1200px;
+  margin:auto;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.logo{color:var(--accent);font-weight:bold}
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.nav a{
+  color:var(--text);
+  margin-left:20px;
+  text-decoration:none;
+  font-size:14px;
+  opacity:.8;
+  position:relative;
+  padding-bottom:4px;
+}
+.nav a:hover{opacity:1;color:var(--accent)}
+.nav a.active{
+  opacity:1;
+  color:var(--accent);
+}
+.nav a.active::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:-4px;
+  width:100%;height:2px;
+  background:var(--accent);
+  border-radius:2px;
+}
+.theme-toggle{
+  margin-left:20px;
+  background:none;
+  border:1px solid var(--accent);
+  color:var(--text);
+  border-radius:20px;
+  padding:6px 14px;
+  cursor:pointer;
+  font-size:13px;
+  transition:.3s;
+}
+.theme-toggle:hover{background:var(--accent);color:#fff}
+ 
+/* SECTIONS */
+section{
+  max-width:1200px;
+  margin:auto;
+  padding:120px 20px;
+}
+h2{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:36px;
+}
+ 
+/* SCROLL ANIMATION */
+.fade-in{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.fade-in.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+ 
+/* HERO */
+.hero{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+.hero h1{font-size:48px}
+.hero span{color:var(--accent)}
+.hero p{max-width:480px;opacity:.85;margin:20px 0}
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+}
+.btn{
+  display:inline-block;
+  padding:12px 26px;
+  border-radius:30px;
+  background:linear-gradient(90deg,#c44bff,#ff4fd8);
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 0 25px rgba(200,80,255,.6);
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+}
+.profile{
+  width:300px;height:300px;
+  border-radius:50%;
+  padding:6px;
+  background:linear-gradient(135deg,#c44bff,#ff4fd8);
+  box-shadow:0 0 40px rgba(200,80,255,.6);
+  margin:auto;
+}
+.profile img{
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+}
+ 
+/* ABOUT SECTION */
+.about-section{text-align:center}
+.about-section h2 span{color:var(--accent)}
+.about-desc{
+  max-width:650px;
+  margin:0 auto 50px;
+  opacity:.8;
+  font-size:15px;
+}
+.about-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+.about-card{
+  background:var(--card-bg);
+  border-radius:18px;
+  padding:30px 25px;
+  text-align:left;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 25px rgba(200,80,255,.15);
+  transition:transform .3s,box-shadow .3s;
+}
+.about-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 35px rgba(200,80,255,.35);
+}
+.about-card h4{margin-bottom:12px;color:var(--accent)}
+.about-card p{font-size:14px;opacity:.85;margin-bottom:15px}
+ 
+/* SKILLS SECTION */
+.skills-box{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  max-width:800px;
+  margin:0 auto;
+  padding:30px;
+  background:var(--card-bg);
+  border-radius:18px;
+  box-shadow:0 0 25px rgba(200,80,255,.15);
+  backdrop-filter:blur(10px);
+}
+.skill-column h3{color:var(--accent);margin-bottom:12px}
+.skill-column ul{list-style-type:disc;padding-left:20px;line-height:1.8}
+.skill-column li{margin-bottom:8px}
+ 
+.about-card .btn{padding:8px 20px;font-size:13px}
+ 
+/* CONTACT */
+form{
+  max-width:500px;
+  margin:auto;
+  background:var(--card-bg);
+  padding:30px;
+  border-radius:15px;
+}
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  background:var(--input-bg);
+  border:1px solid var(--input-border);
+  color:var(--text);
+  border-radius:8px;
+  font-family:inherit;
+}
+form button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(90deg,#c44bff,#ff4fd8);
+  color:#fff;
+  cursor:pointer;
+}
+.form-status{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+  min-height:18px;
+}
+ 
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:40px 20px 30px;
+}
+.social-links{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-bottom:18px;
+}
+.social-links a{
+  width:42px;height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:var(--card-bg);
+  color:var(--text);
+  transition:.3s;
+}
+.social-links a:hover{
+  background:var(--accent);
+  color:#fff;
+  transform:translateY(-4px);
+}
+.social-links svg{width:20px;height:20px;fill:currentColor}
+footer p{opacity:.6;font-size:13px}
+ 
+/* BACK TO TOP */
+#backToTop{
+  position:fixed;
+  bottom:30px;right:30px;
+  width:46px;height:46px;
+  border-radius:50%;
+  background:linear-gradient(90deg,#c44bff,#ff4fd8);
+  color:#fff;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 0 20px rgba(200,80,255,.6);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(20px);
+  transition:.3s;
+  z-index:99;
+}
+#backToTop.show{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+ 
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero-buttons{justify-content:center}
+  .skills-box{grid-template-columns:1fr;gap:20px}
+  .nav-links{width:100%;justify-content:center;margin-top:10px}
+  .nav a{margin:0 10px}
+}
+</style>
+</head>
+ 
+<body data-theme="dark">
+ 
+<nav>
+  <div class="nav">
+    <div class="logo">Maxamed&lt;/&gt;</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+    </div>
+  </div>
+</nav>
+ 
+<section id="home" class="hero">
+  <div>
+    <h1>Hi, I am <span>Maxamed</span></h1>
+    <p>Web development and graphics design enthusiast.</p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn">View Projects</a>
+      <a href="cv.pdf" class="btn" download style="background:#fff;color:#000;">⬇ Download CV</a>
+    </div>
+  </div>
+  <div class="profile">
+    <img src="me.jpeg" alt="Profile">
+  </div>
+</section>
+ 
+<section id="about" class="about-section fade-in">
+  <h2>About <span>Me</span></h2>
+  <p class="about-desc">
+    I am passionate about web development and graphics design, constantly
+    learning and improving my skills to create impactful digital solutions.
+  </p>
+ 
+  <div class="about-cards">
+    <div class="about-card">
+      <h4>👤 Who I Am</h4>
+      <p>My name is Mohamed Shugri. I'm from Hargeisa, Somaliland</p>
+    </div>
+    <div class="about-card">
+      <h4>🎓 Education</h4>
+      <p>I am a student currently pursuing my education. I study at school and at Tisqaad College, where I am learning Information Technology (IT).</p>
+    </div>
+    <div class="about-card">
+      <h4>💼 Experience</h4>
+      <p>Building personal projects using HTML and CSS. Graphics Design like banner design and logo design.</p>
+    </div>
+    <div class="about-card">
+      <h4>💻 Focus</h4>
+      <p>Front-end development and creative design.</p>
+    </div>
+  </div>
+</section>
+ 
+<section id="skills" class="fade-in">
+  <h2>My Skills</h2>
+  <div class="skills-box">
+    <div class="skill-column">
+      <h3>Web Development</h3>
+      <ul>
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>Responsive Design</li>
+        <li>Basic Web Layouts</li>
+      </ul>
+    </div>
+    <div class="skill-column">
+      <h3>Graphics Design</h3>
+      <ul>
+        <li>Logo Design</li>
+        <li>Poster Design</li>
+        <li>Social Media Graphics</li>
+        <li>Basic Photo Editing</li>
+      </ul>
+    </div>
+  </div>
+</section>
+ 
+<section id="projects" class="fade-in">
+  <h2>My Projects</h2>
+  <div class="about-cards">
+    <div class="about-card">
+      <h4>🏨 Hotel Management System</h4>
+      <p>A desktop application developed using C# and SQL Server to manage hotel rooms, customers, bookings, payments and invoices.</p>
+      <a href="#" class="btn">View Project</a>
+    </div>
+    <div class="about-card">
+      <h4>🎓 Student Management System</h4>
+      <p>A C# Windows Forms application for managing student registration and records.</p>
+      <a href="#" class="btn">View Project</a>
+    </div>
+    <div class="about-card">
+      <h4>🌐 Portfolio Website</h4>
+      <p>A responsive portfolio website built using HTML and CSS.</p>
+      <a href="#" class="btn">View Project</a>
+    </div>
+    <div class="about-card">
+      <h4>🧮 Calculator App</h4>
+      <p>A simple calculator application built with C# Windows Forms.</p>
+      <a href="#" class="btn">View Project</a>
+    </div>
+  </div>
+</section>
+ 
+<section id="services" class="fade-in">
+  <h2>Services</h2>
+  <div class="about-cards">
+    <div class="about-card">
+      <h4>💻 Web Development</h4>
+      <p>Building responsive and modern websites using HTML, CSS and JavaScript.</p>
+    </div>
+    <div class="about-card">
+      <h4>🎨 Graphics Design</h4>
+      <p>Logo Design, Banner Design, Poster Design and Social Media Graphics.</p>
+    </div>
+    <div class="about-card">
+      <h4>🖥 Desktop Applications</h4>
+      <p>Developing desktop applications using C# Windows Forms.</p>
+    </div>
+    <div class="about-card">
+      <h4>🗄 Database Design</h4>
+      <p>Creating SQL Server databases with tables, relationships and queries.</p>
+    </div>
+  </div>
+</section>
+ 
+<section id="contact" class="fade-in">
+  <h2>Contact</h2>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <textarea rows="5" id="message" placeholder="Message" required></textarea>
+    <button type="submit">Send Message</button>
+    <p class="form-status" id="formStatus"></p>
+  </form>
+</section>
+ 
+<footer>
+  <div class="social-links">
+    <a href="https://github.com/yourusername" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.28 5.69.42.36.78 1.08.78 2.18v3.23c0 .3.2.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+    </a>
+    <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+    </a>
+    <a href="https://wa.me/252637671946" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5C10.1 9 9.5 7.6 9.3 7c-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.2L2 22l4.9-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.2-.4-4.5-1.2l-.3-.2-3 .8.8-2.9-.2-.3C4 15.1 3.5 13.5 3.5 12 3.5 7.3 7.3 3.5 12 3.5S20.5 7.3 20.5 12 16.7 20.3 12 20.3z"/></svg>
+    </a>
+    <a href="mailto:maxamedshugricabdiaadan@gmail.com" aria-label="Email">
+      <svg viewBox="0 0 24 24"><path d="M2 4h20c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H2c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 2v.01L12 13 22 6.01V6H2zm0 12h20V8.24l-9.53 6.36a1 1 0 0 1-1.11 0L2 8.24V18z" transform="translate(0,0) scale(0.9)"/></svg>
+    </a>
+  </div>
+  <p>© 2026 Mohamed. All rights reserved. · <a href="login.html" style="opacity:.5;text-decoration:none;color:var(--text)">Admin</a></p>
+</footer>
+ 
+<button id="backToTop" aria-label="Back to top">↑</button>
+ 
+<script>
+// ===== ACTIVE NAVBAR ON SCROLL =====
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".nav-links a[href^='#']");
+ 
+function setActiveLink(){
+  let current = "";
+  const scrollPos = window.scrollY + 120;
+  sections.forEach(sec=>{
+    if(scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight){
+      current = sec.getAttribute("id");
+    }
+  });
+  navLinks.forEach(link=>{
+    link.classList.remove("active");
+    if(link.getAttribute("href") === "#" + current){
+      link.classList.add("active");
+    }
+  });
+}
+window.addEventListener("scroll", setActiveLink);
+setActiveLink();
+ 
+// ===== SCROLL ANIMATION (IntersectionObserver) =====
+const fadeEls = document.querySelectorAll(".fade-in");
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+},{threshold:0.15});
+fadeEls.forEach(el=>observer.observe(el));
+ 
+// ===== BACK TO TOP BUTTON =====
+const backToTop = document.getElementById("backToTop");
+window.addEventListener("scroll", ()=>{
+  if(window.scrollY > 400){
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
+});
+backToTop.addEventListener("click", ()=>{
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+ 
+// ===== DARK / LIGHT MODE =====
+const themeToggle = document.getElementById("themeToggle");
+const body = document.body;
+ 
+function applyTheme(theme){
+  body.setAttribute("data-theme", theme);
+  themeToggle.textContent = theme === "dark" ? "🌙 Dark" : "☀️ Light";
+  localStorage.setItem("portfolio-theme", theme);
+}
+ 
+const savedTheme = localStorage.getItem("portfolio-theme") || "dark";
+applyTheme(savedTheme);
+ 
+themeToggle.addEventListener("click", ()=>{
+  const newTheme = body.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyTheme(newTheme);
+});
+ 
+// ===== CONTACT FORM -> BACKEND API =====
+const contactForm = document.getElementById("contactForm");
+const formStatus = document.getElementById("formStatus");
+ 
+// Change this to your deployed ASP.NET Core API URL
+const API_BASE_URL = "https://localhost:5001/api";
+ 
+contactForm.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+ 
+  formStatus.textContent = "Sending...";
+  formStatus.style.color = "#d86cff";
+ 
+  try{
+    const res = await fetch(`${API_BASE_URL}/contact`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({name, email, message})
+    });
+ 
+    if(res.ok){
+      formStatus.textContent = "Message sent successfully!";
+      formStatus.style.color = "#4caf50";
+      contactForm.reset();
+    } else {
+      throw new Error("Server error");
+    }
+  } catch(err){
+    formStatus.textContent = "Could not send message. Make sure the backend server is running.";
+    formStatus.style.color = "#ff6b6b";
+  }
+});
+</script>
+ 
+</body>
+</html>
