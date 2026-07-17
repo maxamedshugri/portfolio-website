@@ -12,8 +12,10 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>()
-            .HasIndex(u => u.Username)
-            .IsUnique();
+        // Note: no unique index on Username here — the free MySQL host used
+        // for this project (freesqldatabase.com) fails to create unique
+        // indexes with a "table is full" error due to its tiny quota.
+        // Uniqueness is instead enforced in the AuthController when
+        // updating credentials.
     }
 }

@@ -1,11 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PortfolioApi.Models;
 
 public class ContactMessage
 {
     public int Id { get; set; }
+
+    [MaxLength(150)]
     public string Name { get; set; } = string.Empty;
+
+    [MaxLength(150)]
     public string Email { get; set; } = string.Empty;
+
+    [MaxLength(2000)]
     public string Message { get; set; } = string.Empty;
+
     public bool IsRead { get; set; } = false;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
